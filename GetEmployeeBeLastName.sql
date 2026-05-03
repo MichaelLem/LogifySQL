@@ -1,18 +1,36 @@
-CREATE OR ALTER PROCEDURE dbo.GetEmployeesByLastName
-    @LastName NVARCHAR(50)   -- Paramater1
-	,@RoleId INT
+USE [Logify]
+GO
+/****** Object:  StoredProcedure [dbo].[GetEmployeesByLastName]    Script Date: 5/3/2026 11:42:16 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER   PROCEDURE [dbo].[GetEmployeesByLastName]
+    @LastName NVARCHAR(50),
+    @RoleId INT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-SELECT dbo.Person.FirstName, dbo.Person.LastName, dbo.Person.Email, dbo.Employee.DateHired, dbo.Role.RoleName
-FROM   dbo.Employee INNER JOIN
-             dbo.Person ON dbo.Employee.EmployeeId = dbo.Person.EmployeeId INNER JOIN
-             dbo.Role ON dbo.Employee.RoleId = dbo.Role.RoleId
-WHERE (dbo.Person.LastName = @LastName)
-AND (dbo.Role.RoleId = @RoleId)
+    SELECT 
+        c.CompanyName,
+        c.CompanyId,
+        p.FirstName,
+        p.LastName,
+        p.SSN,
+        p.Email,
+        p.PhoneNumber,
+        e.HourlyRate,
+        e.EmployeeId,
+        e.DateHired,
+        e.IsActive
+    FROM dbo.Employee e
+    INNER JOIN dbo.Person p 
+        ON e.EmployeeId = p.EmployeeId 
+    INNER JOIN dbo.Role r 
+        ON e.RoleId = r.RoleId
+    INNER JOIN dbo.Company c 
+        ON e.CompanyId = c.CompanyId
+    WHERE p.LastName = @LastName
+      AND r.RoleId = @RoleId
 END;
-GO
-
--- Example usage:
--- EXEC dbo.GetEmployeesByLastName @LastName = 'Smith';s

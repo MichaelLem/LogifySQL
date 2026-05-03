@@ -1,4 +1,11 @@
-CREATE OR ALTER PROCEDURE dbo.InsertNewEmployee
+USE [Logify]
+GO
+/****** Object:  StoredProcedure [dbo].[InsertNewEmployee]    Script Date: 4/28/2026 1:18:52 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER   PROCEDURE [dbo].[InsertNewEmployee]
     @CompanyId INT,
     @RoleId INT,
     @HourlyRate DECIMAL(6,2),
@@ -51,5 +58,5 @@ BEGIN
         @Email,
         @PhoneNumber
     );
+    SELECT @NewEmployeeId AS EmployeeId;
 END;
-GO
