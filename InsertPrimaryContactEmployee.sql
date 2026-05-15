@@ -7,16 +7,15 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER   PROCEDURE [dbo].[InsertNewEmployee]
+CREATE PROCEDURE [dbo].[InsertPrimaryContactEmployee]
     @CompanyId INT,
     @RoleId INT,
-    @HourlyRate DECIMAL(6,2),
-    @DateHired DATE,
     @FirstName NVARCHAR(50),
     @LastName NVARCHAR(50),
-    @SSN NVARCHAR(11),
     @Email NVARCHAR(255),
-    @PhoneNumber NVARCHAR(20) = NULL
+    @PhoneNumber NVARCHAR(20) = NULL,
+    @DateHired DATE,
+    @HourlyRate DECIMAL(6,2)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -28,16 +27,16 @@ BEGIN
         CompanyId,
         RoleId,
         IsActive,
-        HourlyRate,
-        DateHired
+        DateHired,
+        HourlyRate
     )
     VALUES
     (
         @CompanyId,
         @RoleId,
         1,
-        @HourlyRate,
-        @DateHired
+        @DateHired,
+        @HourlyRate
     );
 
     SET @NewEmployeeId = SCOPE_IDENTITY();
@@ -47,7 +46,6 @@ BEGIN
         EmployeeId,
         FirstName,
         LastName,
-        SSN,
         Email,
         PhoneNumber
     )
@@ -56,7 +54,6 @@ BEGIN
         @NewEmployeeId,
         @FirstName,
         @LastName,
-        @SSN,
         @Email,
         @PhoneNumber
     );
