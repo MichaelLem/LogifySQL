@@ -4,7 +4,7 @@ CREATE PROCEDURE dbo.InsertUserAccount
     @PasswordHash NVARCHAR(255)
 AS
 BEGIN
-    SET NOCOUNT ON;
+    SET NOCOUNT OFF;
 
     INSERT INTO dbo.UserAccount
     (

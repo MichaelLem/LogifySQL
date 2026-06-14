@@ -2,7 +2,7 @@ CREATE OR ALTER PROCEDURE dbo.DeleteEmployee
     @EmployeeId INT
 AS
 BEGIN
-    SET NOCOUNT ON;
+    SET NOCOUNT OFF;
 
     UPDATE dbo.Employee
 	SET IsActive = 0
